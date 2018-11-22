@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Intervention\Image\Facades\Image;
 
 class RegisterController extends Controller
 {
@@ -54,7 +58,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'mobile_number' => ['required'],
             'p_address' => ['required'],
-            'file' => ['required'],
+            'image' => ['required'],
         ]);
     }
 
@@ -66,13 +70,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //$fileName = 'null';
+        if (Input::file('image')->isValid()) {
+            $destinationPath = public_path('uploads/files');
+            $extension = Input::file('image')->getClientOriginalExtension();
+            $fileName = uniqid().'.'.$extension;
+
+            Input::file('image')->move($destinationPath, $fileName);
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'mobile_number' => $data['mobile_number'],
             'p_address' => $data['p_address'],
-            'file' => $data['file'],
+            'image' =>  $fileName,
         ]);
     }
 }

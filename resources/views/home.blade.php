@@ -18,15 +18,15 @@
                             <div class="card">
                                 <div class="card-header bg-info">
                                     <div class="float-right">
-                                        <h2>{{Auth::user()->name}}</h2>
+                                        <h2><strong>{{Auth::user()->name}}</strong></h2>
                                     </div>
                                     <div class="float-left ">
-                                        {{--<img src="{{Auth::user()->image}}" alt="User Image">--}}
-                                        <img src="{{asset('img/pro-pic.jpg')}}" width="100px;" alt="" class="rounded-circle">
+                                        <img src="{{asset('uploads/files/'.Auth::user()->image)}}" alt="User Image" width="100px;" class="rounded-circle">
+                                        {{--<img src="{{asset('img/pro-pic.jpg')}}" width="100px;" alt="" class="rounded-circle">--}}
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table-striped">
+                                    <table class="table-bordered table-responsive">
                                         <tr>
                                             <th width="50%">Name</th>
                                             <td>{{Auth::user()->name}}</td>
@@ -38,6 +38,10 @@
                                         <tr>
                                             <th width="50%">Mobile Number</th>
                                             <td>{{Auth::user()->mobile_number}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="50%">Address</th>
+                                            <td>{{Auth::user()->p_address}}</td>
                                         </tr>
                                     </table>
                                 </div>
